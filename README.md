@@ -87,7 +87,6 @@ edges:
 <details>
 <summary>Дополнительный пример (дублирование результатов в консоль и файл):</summary>
 
-[spoi]
 ```yaml
 nodes:
   - id: walker
