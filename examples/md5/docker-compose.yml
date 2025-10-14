@@ -1,0 +1,7 @@
+services:
+  md5:
+    container_name: go-pipes-md5
+    build:
+      context: ../..
+      dockerfile: examples/md5/Dockerfile 
+    image: go-pipes-md5:local

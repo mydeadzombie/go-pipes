@@ -1,0 +1,42 @@
+nodes:
+  - id: walker
+    type: file_walker
+    config:
+      workers: 1
+      dir: 
+      - "/bin"
+      - "/app"
+  - id: hasher
+    type: md5_hasher
+    config:
+      workers: 10
+  - id: printer
+    type: printer
+    config:
+      workers: 3
+      quiet: false
+
+  - id: tee
+    type: tee
+    config: {}
+
+  - id: fileout
+    type: file_sink
+    config:
+      path: "/app/md5.txt"
+      append: false
+
+edges:
+  - from: walker.files
+    to: hasher.paths
+    buffer: 256
+  - from: hasher.results
+    to: tee.in
+    buffer: 0
+  - from: tee.out1
+    to: printer.in
+    buffer: 0
+  - from: tee.out2
+    to: fileout.in
+    buffer: 0
+
