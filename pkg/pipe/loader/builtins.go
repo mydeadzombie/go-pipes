@@ -58,6 +58,12 @@ func getStringList(cfg map[string]any, key string, def []string) []string {
 
 func builtinFactories() map[string]BuiltinFactory {
 	return map[string]BuiltinFactory{
+        "stdin_source": func(id string, cfg map[string]any, d Defaults) (pipe.Node, error) {
+            if id == "" { return nil, fmt.Errorf("empty id") }
+            prompt := getString(cfg, "prompt", "Enter file path: ")
+            allowEmpty := getBool(cfg, "allowEmpty", false)
+            return nodes.NewStdinSource(id, prompt, allowEmpty), nil
+        },
 		"file_walker": func(id string, cfg map[string]any, d Defaults) (pipe.Node, error) {
 			if id == "" {
 				return nil, fmt.Errorf("empty id")

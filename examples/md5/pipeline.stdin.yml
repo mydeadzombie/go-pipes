@@ -1,0 +1,25 @@
+nodes:
+  - id: input
+    type: stdin_source
+    config:
+      prompt: "Enter file path: "
+      allowEmpty: false
+  - id: hasher
+    type: md5_hasher
+    config:
+      workers: 1
+  - id: printer
+    type: printer
+    config:
+      workers: 1
+      quiet: false
+
+edges:
+  - from: input.paths
+    to: hasher.paths
+    buffer: 0
+  - from: hasher.results
+    to: printer.in
+    buffer: 0
+
+

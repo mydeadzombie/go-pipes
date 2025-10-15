@@ -55,6 +55,9 @@ edges:
     - конфиг: `path` (string), `append` (bool), `workers` (int). При `workers>1` вывод группируется секциями по worker.
   - `tee`:
     - вход `in`, выходы `out1`, `out2` — дублирует поток на два направления.
+  - `stdin_source`:
+    - выводит один путь в порт `paths`, читая строку из stdin
+    - конфиг: `prompt` (string), `allowEmpty` (bool)
 - **edges**: соединения вида `from: <node>.<outPort>`, `to: <node>.<inPort>`, опционально `buffer` (int, по умолчанию 0).
 - **правила**:
   - Идентификаторы узлов должны быть уникальны.
@@ -148,5 +151,13 @@ docker run --rm -v $(pwd):/data go-pipes-md5 -pipeline=/pipeline.yml -dir=/data
 ```bash
 # Build and Run example with docker compose
 docker compose -f examples/md5/docker-compose.yml up --build
+```
+
+### Интерактивный пример (stdin)
+
+```bash
+go run ./examples/md5 -pipeline=examples/md5/pipeline.stdin.yml
+# или без ожидания ввода:
+echo "/path/to/file" | go run ./examples/md5 -pipeline=examples/md5/pipeline.stdin.yml
 ```
 
